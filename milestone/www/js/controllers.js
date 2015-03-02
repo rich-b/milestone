@@ -92,7 +92,14 @@ angular.module('milestone.controllers', ['milestone.filters'])
         console.log(err);
       });
     }
+  };
 
+  $scope.takePicture = function() {
+    Camera.getPicture().then(function(imageURI) {
+      console.log(imageURI);
+    }, function(err) {
+      console.err(err);
+    });
   };
 
 });
