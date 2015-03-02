@@ -51,6 +51,18 @@ angular.module('milestone.controllers', ['milestone.filters'])
   };
 })
 
+.controller('MilestoneViewCtrl', function($scope, $location, $stateParams, milestoneService) {
+  $scope.milestoneModel = {};
+
+  milestoneService.getMilestone($stateParams.id).then(function(milestone) {
+    $scope.milestoneModel = angular.copy(milestone);
+  });
+
+  $scope.edit = function(item) {
+    $location.path('/app/edit-milestone/' + $scope.milestoneModel.id);
+  };
+})
+
 .controller('MilestoneEditCtrl', function($scope, $filter, $location, $stateParams, milestoneService) {
   $scope.milestoneModel = {};
   $scope.isNew = true;

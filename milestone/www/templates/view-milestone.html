@@ -1,11 +1,12 @@
 <ion-view view-title="View Milestone">
+  <ion-nav-buttons side="right">
+    <button class="button button-clear button-positive" ng-click="edit()">Edit</button>
+  </ion-nav-buttons>
+
   <ion-content>
-
     <div class="list card">
-
       <div class="item item-avatar">
         <div class="milestone-type {{milestoneModel.type | typeIcon}}"></div>
-
         <h2>{{milestoneModel.title}}</h2>
         <p>{{milestoneModel.date | date}}</p>
       </div>

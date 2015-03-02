@@ -44,7 +44,7 @@ angular.module('milestone', ['ionic', 'milestone.controllers', 'milestone.servic
     views: {
       'menuContent': {
         templateUrl: "templates/view-milestone.html",
-        controller: "MilestoneEditCtrl"
+        controller: "MilestoneViewCtrl"
       }
     }
   })

@@ -7,7 +7,8 @@
   <ion-content>
     <ion-list>
       <ion-item show-delete="true" ng-repeat="milestone in milestones" href="#/app/view-milestone/{{milestone.id}}">
-        {{milestone.title}}
+        <i class="icon {{milestone.type | typeIcon}}"></i>
+        <span>{{milestone.title}}</span>
 
         <ion-option-button class="button-balanced button"
                            ng-click="edit(milestone)">
