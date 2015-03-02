@@ -1,0 +1,12 @@
+/* Empty. Add your own CSS if you like */
+
+.milestone-type {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    max-width: 40px;
+    max-height: 40px;
+    width: 100%;
+    border-radius: 50%;
+    font-size: 30pt;
+}

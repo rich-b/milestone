@@ -1,0 +1,35 @@
+<ion-view view-title="View Milestone">
+  <ion-content>
+
+    <div class="list card">
+
+      <div class="item item-avatar">
+        <div class="milestone-type {{milestoneModel.type | typeIcon}}"></div>
+
+        <h2>{{milestoneModel.title}}</h2>
+        <p>{{milestoneModel.date | date}}</p>
+      </div>
+
+      <div class="item item-body">
+        <img class="full-image" src="/img/docs/delorean.jpg">
+        <p>
+          {{milestoneModel.description}}
+        </p>
+      </div>
+
+      <div class="item tabs tabs-secondary tabs-icon-left">
+
+        <a class="tab-item" href="#">
+          <i class="icon ion-chatbox"></i>
+          Comment
+        </a>
+        <a class="tab-item active" href="#">
+          <i class="icon ion-share"></i>
+          Share
+        </a>
+      </div>
+
+    </div>
+
+  </ion-content>
+</ion-view>
