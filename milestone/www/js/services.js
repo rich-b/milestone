@@ -8,7 +8,10 @@ angular.module('milestone.services', [])
     { type:'Firsts', title: 'Hike in the woods', id: '5b013ba4-7980-49aa-9579-f0bfe0263d25' },
     { type:'Firsts', title: 'Day at the beach', id: '237d95cb-e111-4cb0-8f8d-92372fd19c9e' },
     { type:'Achievement', title: '1 Month old', id: '456e12b5-7fb7-49cf-bba3-d5aee43083c4' },
-    { type:'Event', title: 'Day with Grandparents', id: '38896f92-22dd-4445-bab5-7cf584761bf4' }
+    { type:'Event', title: 'Day with Grandparents', id: '38896f92-22dd-4445-bab5-7cf584761bf4', images:[
+      {src: 'http://www.franklin.edu/blog/wp-content/uploads/2012/11/master-test-taking-with-these-four-tips.jpg', title: 'caption1'},
+      {src: 'https://pbs.twimg.com/media/A7hdDEnCYAA8oky.jpg', title: 'caption2', isDefault: true}
+    ] }
   ];
 
   this.getMilestoneList = function (query, offset) {

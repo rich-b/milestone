@@ -1,19 +1,26 @@
 <div>
   <label class="item item-input item-select">
     <span class="input-label">Type</span>
-    <select ng-model="milestoneModel.type">
+    <select ng-model="ctrl.milestoneModel.type">
       <option>Firsts</option>
       <option>Happy Moment</option>
       <option>Event</option>
     </select>
   </label>
   <label class="item item-input">
-    <input type="text" ng-model="milestoneModel.title" placeholder="Title">
+    <input type="text" ng-model="ctrl.milestoneModel.title" placeholder="Title">
   </label>
   <label class="item item-input">
-    <input type="date" ng-model="milestoneModel.date" placeholder="Date">
+    <input type="date" ng-model="ctrl.milestoneModel.date" placeholder="Date">
   </label>
   <label class="item item-input">
-    <textarea ng-model="milestoneModel.description" placeholder="Description"></textarea>
+    <textarea ng-model="ctrl.milestoneModel.description" placeholder="Description"></textarea>
   </label>
+
+
+  <img ng-src="imgUri">
+  <button class="button button-dark" ng-click="ctrl.takePicture()">
+    Take Picture
+  </button>
+
 </div>

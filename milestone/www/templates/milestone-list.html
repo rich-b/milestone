@@ -1,21 +1,21 @@
 <ion-view view-title="Milestones">
   <ion-nav-buttons side="right">
-    <button class="button button-icon button-clear ion-plus-round" ng-click="create()">
+    <button class="button button-icon button-clear ion-plus-round" ng-click="ctrl.create()">
     </button>
   </ion-nav-buttons>
 
   <ion-content>
     <ion-list>
-      <ion-item show-delete="true" ng-repeat="milestone in milestones" href="#/app/view-milestone/{{milestone.id}}">
+      <ion-item show-delete="true" ng-repeat="milestone in ctrl.milestones" href="#/app/view-milestone/{{milestone.id}}">
         <i class="icon {{milestone.type | typeIcon}}"></i>
         <span>{{milestone.title}}</span>
 
         <ion-option-button class="button-balanced button"
-                           ng-click="edit(milestone)">
+                           ng-click="ctrl.edit(milestone)">
           Edit
         </ion-option-button>
         <ion-option-button class="button-assertive button ion-minus"
-                           ng-click="delete(milestone)">
+                           ng-click="ctrl.delete(milestone)">
         </ion-option-button>
 
       </ion-item>

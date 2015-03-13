@@ -1,20 +1,24 @@
 <ion-view view-title="View Milestone">
   <ion-nav-buttons side="right">
-    <button class="button button-clear button-positive" ng-click="edit()">Edit</button>
+    <button class="button button-clear button-positive" ng-click="ctrl.edit()">Edit</button>
   </ion-nav-buttons>
 
   <ion-content>
     <div class="list card">
       <div class="item item-avatar">
-        <div class="milestone-type {{milestoneModel.type | typeIcon}}"></div>
-        <h2>{{milestoneModel.title}}</h2>
-        <p>{{milestoneModel.date | date}}</p>
+        <div class="milestone-type {{ctrl.milestoneModel.type | typeIcon}}"></div>
+        <h2>{{ctrl.milestoneModel.title}}</h2>
+        <p>{{ctrl.milestoneModel.date | date}}</p>
       </div>
 
       <div class="item item-body">
-        <img class="full-image" src="/img/docs/delorean.jpg">
+        <figure ng-show="ctrl.milestoneModel.mainImage">
+          <img class="full-image" ng-src="{{ctrl.milestoneModel.mainImage.src}}" title="{{ctrl.milestoneModel.mainImage.title}}">
+          <figcaption>{{ctrl.milestoneModel.mainImage.title}}</figcaption>
+        </figure>
+
         <p>
-          {{milestoneModel.description}}
+          {{ctrl.milestoneModel.description}}
         </p>
       </div>
 

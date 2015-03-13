@@ -44,7 +44,7 @@ angular.module('milestone', ['ionic', 'milestone.controllers', 'milestone.servic
     views: {
       'menuContent': {
         templateUrl: "templates/view-milestone.html",
-        controller: "MilestoneViewCtrl"
+        controller: "MilestoneViewCtrl as ctrl"
       }
     }
   })
@@ -53,7 +53,7 @@ angular.module('milestone', ['ionic', 'milestone.controllers', 'milestone.servic
     views: {
       'menuContent': {
         templateUrl: "templates/edit-milestone.html",
-        controller: "MilestoneEditCtrl"
+        controller: "MilestoneEditCtrl as ctrl"
       }
     }
   })
@@ -71,7 +71,7 @@ angular.module('milestone', ['ionic', 'milestone.controllers', 'milestone.servic
     views: {
       'menuContent': {
         templateUrl: "templates/milestone-list.html",
-        controller: 'MilestoneListCtrl'
+        controller: 'MilestoneListCtrl as ctrl'
       }
     }
   })
