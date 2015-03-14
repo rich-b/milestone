@@ -19,3 +19,20 @@ figcaption {
   margin-top: 8px;
   font-style: italic;
 }
+
+.image-list {
+  height:250px;
+  text-align: center;
+}
+
+.image-list ul {
+  height: calc(100% - 30px);
+}
+
+.image-list img {
+  max-height: 250px;
+}
+
+.scroll {
+  height: 100%;
+}

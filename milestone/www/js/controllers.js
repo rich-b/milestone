@@ -70,7 +70,7 @@ angular.module('milestone.controllers', ['milestone.filters'])
   };
 })
 
-.controller('MilestoneEditCtrl', function($filter, $location, $stateParams, milestoneService) {
+.controller('MilestoneEditCtrl', function($filter, $location, $stateParams, milestoneService, cameraService) {
   this.milestoneModel = {};
   this.isNew = true;
   var self = this;
@@ -103,7 +103,7 @@ angular.module('milestone.controllers', ['milestone.filters'])
   };
 
   this.takePicture = function() {
-    Camera.getPicture().then(function(imageURI) {
+    cameraService.getPicture().then(function(imageURI) {
       self.imgUri = imageURI;
       console.log(imageURI);
     }, function(err) {
