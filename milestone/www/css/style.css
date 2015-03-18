@@ -23,6 +23,7 @@ figcaption {
 .image-list {
   height:250px;
   text-align: center;
+  background-color: #E2E2E2;
 }
 
 .image-list ul {
@@ -35,4 +36,8 @@ figcaption {
 
 .scroll {
   height: 100%;
+}
+
+.tabs .selected {
+  color: crimson;
 }

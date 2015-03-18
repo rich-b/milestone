@@ -2,7 +2,7 @@
 
 
 
-<div ng-show="displayTab === 'details'">
+<div ng-show="ctrl.displayTab === 'details'">
   <label class="item item-input item-select">
     <span class="input-label">Type</span>
     <select ng-model="ctrl.milestoneModel.type">
@@ -25,7 +25,7 @@
 
 </div>
 
-<div ng-show="displayTab === 'images'">
+<div ng-show="ctrl.displayTab === 'images'">
   <div class="list">
 
     <div class="image-list">
@@ -88,17 +88,3 @@
   </button>
 </div>
 
-<div class="tabs tabs-icon-top">
-  <a class="tab-item" ng-click="displayTab='details'">
-    <i class="icon ion-clipboard"></i>
-    Details
-  </a>
-  <a class="tab-item" ng-click="displayTab='images'">
-    <i class="icon ion-images"></i>
-    Images
-  </a>
-  <a class="tab-item" ng-click="displayTab='video'">
-    <i class="icon ion-videocamera"></i>
-    Videos
-  </a>
-</div>

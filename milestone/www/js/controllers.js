@@ -73,6 +73,7 @@ angular.module('milestone.controllers', ['milestone.filters'])
 .controller('MilestoneEditCtrl', function($filter, $location, $stateParams, milestoneService, cameraService) {
   this.milestoneModel = {};
   this.isNew = true;
+  this.displayTab = 'details';
   var self = this;
 
   if (_.isUndefined($stateParams.id) || $stateParams.id === '') {

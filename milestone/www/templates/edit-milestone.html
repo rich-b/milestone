@@ -8,4 +8,20 @@
     </button>
 
   </ion-content>
+
+  <div class="tabs tabs-icon-top">
+    <a class="tab-item" ng-click="ctrl.displayTab='details'" ng-class="{'selected': ctrl.displayTab === 'details'}">
+      <i class="icon ion-clipboard"></i>
+      Details
+    </a>
+    <a class="tab-item" ng-click="ctrl.displayTab='images'" ng-class="{'selected': ctrl.displayTab === 'images'}">
+      <i class="icon ion-images"></i>
+      Images
+    </a>
+    <a class="tab-item" ng-click="ctrl.displayTab='video'" ng-class="{'selected': ctrl.displayTab === 'video'}">
+      <i class="icon ion-videocamera"></i>
+      Videos
+    </a>
+  </div>
+
 </ion-view>
