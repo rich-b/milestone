@@ -1,8 +1,8 @@
 angular.module('milestone.services', [])
 
-.service('milestoneService', function ($q, guid) {
+.service('milestoneService', function ($q, $http) {
 
-  var milestones = [
+  /*var milestones = [
     { type:'Firsts', title: 'First Smile', id: '01d238c7-426c-4031-aea5-52ad5f5e6f0e' },
     { type:'Event', title: 'Lots of Coos', id: 'b1b70f5c-4e95-4ce9-85e9-2ac8a41d4d88' },
     { type:'Firsts', title: 'Hike in the woods', id: '5b013ba4-7980-49aa-9579-f0bfe0263d25' },
@@ -12,33 +12,22 @@ angular.module('milestone.services', [])
       {src: 'http://www.franklin.edu/blog/wp-content/uploads/2012/11/master-test-taking-with-these-four-tips.jpg', title: 'caption1'},
       {src: 'https://pbs.twimg.com/media/A7hdDEnCYAA8oky.jpg', title: 'caption2', isDefault: true}
     ] }
-  ];
+  ];*/
 
   this.getMilestoneList = function (query, offset) {
-    var deferred = $q.defer();
-
-    //todo - call api
-    deferred.resolve(milestones);
-
-    return deferred.promise;
+    return $http.get('http://localhost:3000/milestones?query=' + query + '&offset=' + offset);
   };
 
   this.getMilestone = function(id) {
-    var deferred = $q.defer();
-
-    //todo - call api
-    deferred.resolve(_.find(milestones, {id: id}));
-
-    return deferred.promise;
+    return $http.get('http://localhost:3000/milestones/' + id);
   };
 
   this.addMilestone = function(newMilestone) {
     var deferred = $q.defer();
 
-    newMilestone.id = guid.new();
-    milestones.push(newMilestone);
-
-    deferred.resolve();
+    $http.post('http://localhost:3000/milestones', newMilestone).then(function(m) {
+      deferred.resolve();
+    });
 
     return deferred.promise;
   };
@@ -46,10 +35,9 @@ angular.module('milestone.services', [])
   this.updateMilestone = function(milestone) {
     var deferred = $q.defer();
 
-    var i = _.findIndex(milestones, {id: milestone.id});
-    milestones[i] = milestone;
-
-    deferred.resolve();
+    $http.put('http://localhost:3000/milestones/' + milestone.id, milestone).then(function(m) {
+      deferred.resolve();
+    });
 
     return deferred.promise;
   };
@@ -61,7 +49,7 @@ angular.module('milestone.services', [])
 
 })
 
-.factory('guid', function() {
+/*.factory('guid', function() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
@@ -74,7 +62,7 @@ angular.module('milestone.services', [])
         s4() + '-' + s4() + s4() + s4();
     }
   };
-})
+})*/
 
 .factory('cameraService', function($q) {
   return {

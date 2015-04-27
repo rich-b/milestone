@@ -33,12 +33,16 @@ angular.module('milestone.controllers', ['milestone.filters'])
   };
 })
 
-.controller('MilestoneListCtrl', function($location, milestoneService) {
+.controller('MilestoneListCtrl', function($scope, $location, milestoneListResponse, milestoneService) {
   var self = this;
 
-  milestoneService.getMilestoneList().then(function(list) {
-    self.milestones = list;
-  });
+  self.totalResultsCount = milestoneListResponse.data.total;
+  self.milestones = milestoneListResponse.data.results;
+
+  /*milestoneService.getMilestoneList().then(function(response) {
+    self.totalResultCount = response.data.total;
+    self.milestones = response.data.results;
+  });*/
 
   this.create = function() {
     $location.path('/app/create-milestone');
@@ -51,14 +55,26 @@ angular.module('milestone.controllers', ['milestone.filters'])
   this.delete = function(item) {
     milestoneService.deleteMilestone(item);
   };
+
+  this.moreMilestonesExist = function() {
+    return self.milestones && self.milestones.length < self.totalResultCount;
+  };
+
+  this.loadMoreMilestones = function() {
+    milestoneService.getMilestoneList('', self.milestones.length).then(function(response) {
+      Array.prototype.push.apply(self.milestones, response.data.results);
+      $scope.$broadcast('scroll.infiniteScrollComplete');
+      $scope.$broadcast('scroll.resize');
+    });
+  };
 })
 
 .controller('MilestoneViewCtrl', function($location, $stateParams, milestoneService) {
   this.milestoneModel = {};
   var self = this;
 
-  milestoneService.getMilestone($stateParams.id).then(function(milestone) {
-    self.milestoneModel = angular.copy(milestone);
+  milestoneService.getMilestone($stateParams.id).then(function(response) {
+    self.milestoneModel = angular.copy(response.data);
 
     if (self.milestoneModel.images && self.milestoneModel.images.length > 0) {
       self.milestoneModel.mainImage = _.find(self.milestoneModel.images, {isDefault: true}) || self.milestoneModel.images[0];

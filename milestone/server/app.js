@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 //var userModel = require('./models/User');
 var users = require('./routes/users');
+var milestones = require('./routes/milestones');
 
 var env = process.env.NODE_ENV || 'development'
 var config = require('./config')[env]
@@ -38,6 +39,7 @@ app.use(function(req, res, next) {
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/milestones', milestones);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -62,7 +62,7 @@ angular.module('milestone', ['ionic', 'milestone.controllers', 'milestone.servic
     views: {
       'menuContent': {
         templateUrl: "templates/create-milestone.html",
-        controller: "MilestoneEditCtrl"
+        controller: "MilestoneEditCtrl as ctrl"
       }
     }
   })
@@ -72,6 +72,18 @@ angular.module('milestone', ['ionic', 'milestone.controllers', 'milestone.servic
       'menuContent': {
         templateUrl: "templates/milestone-list.html",
         controller: 'MilestoneListCtrl as ctrl'
+      }
+    },
+    resolve: {
+      milestoneListResponse: function(milestoneService) {
+        return milestoneService.getMilestoneList();
+
+        //todo - broadcast message ?? then listen for it in the controller??
+
+        /*milestoneService.getMilestoneList().then(function(response) {
+         self.totalResultCount = response.data.total;
+         self.milestones = response.data.results;
+         });*/
       }
     }
   })

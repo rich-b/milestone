@@ -20,5 +20,12 @@
 
       </ion-item>
     </ion-list>
+
+    <ion-infinite-scroll
+      ng-if="ctrl.moreMilestonesExist()"
+      icon="ion-loading-c"
+      on-infinite="ctrl.loadMoreMilestones()">
+    </ion-infinite-scroll>
+
   </ion-content>
 </ion-view>
