@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('milestone', ['ionic', 'milestone.controllers', 'milestone.services', 'milestone.filters', 'angular-carousel'])
+angular.module('milestone', ['ionic', 'ngResource', 'milestone.controllers', 'milestone.services', 'milestone.filters', 'angular-carousel'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -77,13 +77,6 @@ angular.module('milestone', ['ionic', 'milestone.controllers', 'milestone.servic
     resolve: {
       milestoneListResponse: function(milestoneService) {
         return milestoneService.getMilestoneList();
-
-        //todo - broadcast message ?? then listen for it in the controller??
-
-        /*milestoneService.getMilestoneList().then(function(response) {
-         self.totalResultCount = response.data.total;
-         self.milestones = response.data.results;
-         });*/
       }
     }
   })

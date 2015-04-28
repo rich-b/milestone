@@ -29,7 +29,7 @@
   <div class="list">
 
     <div class="image-list">
-      <ul rn-carousel rn-carousel-index="carouselIndex">
+      <ul rn-carousel rn-carousel-index="carouselIndex" ng-if="ctrl.milestoneModel.images && ctrl.milestoneModel.images.length > 0">
         <li ng-repeat="image in ctrl.milestoneModel.images">
           <img ng-src="{{image.src}}" title="{{image.title}}">
         </li>

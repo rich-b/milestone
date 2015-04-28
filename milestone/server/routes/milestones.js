@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 
   query
     .skip(req.query.offset || 0)
-    .limit(10)
+    .limit(8)
     .exec(function(err, milestones) {
       if (err) {
         res.json({
@@ -61,15 +61,8 @@ router.post('/', function(req, res) {
     })
   });
 
-  milestone.save(function(err, milestone1) {
-    if (err) {
-      res.json({
-        err: err
-      });
-    }
-    else {
-      res.json(mapSchemaMilestoneToModel(milestone1));
-    }
+  milestone.save(function(err, updatedMilestone) {
+    return returnSaveResult(err, updatedMilestone, res);
   });
 });
 
@@ -82,28 +75,27 @@ router.put('/:id', function(req, res) {
     milestoneFromDb.description = req.body.description;
     milestoneFromDb.images = req.body.images;
 
-    milestoneFromDb.save(returnSaveResult);
+    milestoneFromDb.save(function(err, updatedMilestone) {
+      return returnSaveResult(err, updatedMilestone, res);
+    });
   });
-
-  var milestone = new Milestone({
-    type: req.body.type,
-    title: req.body.title,
-    date: req.body.date,
-    description: req.body.description,
-    images: _.map(req.body.images, function(i) {
-      return {
-        src: i.src,
-        title: i.title,
-        isDefault: i.isDefault,
-        tags: i.tags
-      }
-    })
-  });
-
-  milestone.save(returnSaveResult);
 });
 
-function returnSaveResult(err, milestone) {
+router.delete('/:id', function(req, res) {
+  Milestone.findOne({_id: req.params.id}).remove().exec(function(err) {
+    if (err) {
+      res.json({
+        err: err
+      });
+    }
+    else {
+      res.json({});
+    }
+  });
+
+});
+
+function returnSaveResult(err, milestone, res) {
   if (err) {
     res.json({
       err: err

@@ -33,16 +33,15 @@ angular.module('milestone.controllers', ['milestone.filters'])
   };
 })
 
-.controller('MilestoneListCtrl', function($scope, $location, milestoneListResponse, milestoneService) {
+.controller('MilestoneListCtrl', function($scope, $location, $state, milestoneService) {
   var self = this;
 
-  self.totalResultsCount = milestoneListResponse.data.total;
-  self.milestones = milestoneListResponse.data.results;
-
-  /*milestoneService.getMilestoneList().then(function(response) {
-    self.totalResultCount = response.data.total;
-    self.milestones = response.data.results;
-  });*/
+  // workaround to watch when the list resolve is refreshed
+  $scope.$state = $state;
+  $scope.$watch('$state.$current.locals.globals.milestoneListResponse', function(milestoneListResponse) {
+    self.totalResultCount = milestoneListResponse.total;
+    self.milestones = milestoneListResponse.results;
+  });
 
   this.create = function() {
     $location.path('/app/create-milestone');
@@ -53,7 +52,11 @@ angular.module('milestone.controllers', ['milestone.filters'])
   };
 
   this.delete = function(item) {
-    milestoneService.deleteMilestone(item);
+    milestoneService.deleteMilestone(item).then(function success() {
+      $state.reload();
+    }, function error(err) {
+
+    });
   };
 
   this.moreMilestonesExist = function() {
@@ -62,7 +65,7 @@ angular.module('milestone.controllers', ['milestone.filters'])
 
   this.loadMoreMilestones = function() {
     milestoneService.getMilestoneList('', self.milestones.length).then(function(response) {
-      Array.prototype.push.apply(self.milestones, response.data.results);
+      Array.prototype.push.apply(self.milestones, response.results);
       $scope.$broadcast('scroll.infiniteScrollComplete');
       $scope.$broadcast('scroll.resize');
     });
@@ -73,13 +76,10 @@ angular.module('milestone.controllers', ['milestone.filters'])
   this.milestoneModel = {};
   var self = this;
 
-  milestoneService.getMilestone($stateParams.id).then(function(response) {
-    self.milestoneModel = angular.copy(response.data);
-
-    if (self.milestoneModel.images && self.milestoneModel.images.length > 0) {
-      self.milestoneModel.mainImage = _.find(self.milestoneModel.images, {isDefault: true}) || self.milestoneModel.images[0];
-    }
-  });
+  self.milestoneModel = milestoneService.getMilestone($stateParams.id);
+  if (self.milestoneModel.images && self.milestoneModel.images.length > 0) {
+    self.milestoneModel.mainImage = _.find(self.milestoneModel.images, {isDefault: true}) || self.milestoneModel.images[0];
+  }
 
   self.edit = function(item) {
     $location.path('/app/edit-milestone/' + self.milestoneModel.id);
@@ -97,10 +97,8 @@ angular.module('milestone.controllers', ['milestone.filters'])
       date: new Date($filter("date")(Date.now(), 'yyyy-MM-dd'))
     };
   } else {
-    milestoneService.getMilestone($stateParams.id).then(function(milestone) {
-      self.milestoneModel = angular.copy(milestone);
-      self.isNew = false;
-    });
+    self.milestoneModel = milestoneService.getMilestone($stateParams.id);
+    self.isNew = false;
   }
 
   this.save = function() {
