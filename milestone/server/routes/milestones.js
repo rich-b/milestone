@@ -4,8 +4,9 @@ var router = express.Router();
 var env = process.env.NODE_ENV || 'development'
 var config = require('../config')[env];
 var _ = require('lodash-node');
+var authenticationService = require('../services/authentication');
 
-router.get('/', function(req, res, next) {
+router.get('/', authenticationService.ensureAuthorized, function(req, res, next) {
   var query = Milestone.find({}).sort({'date': -1});
 
   query
@@ -32,7 +33,7 @@ router.get('/', function(req, res, next) {
 
 });
 
-router.get('/:id', function(req, res, next) {
+router.get('/:id', authenticationService.ensureAuthorized, function(req, res, next) {
   Milestone.findOne({_id: req.params.id}, function(err, milestoneFromDb) {
     if (err) {
       res.json({
@@ -45,7 +46,7 @@ router.get('/:id', function(req, res, next) {
   });
 });
 
-router.post('/', function(req, res) {
+router.post('/', authenticationService.ensureAuthorized, function(req, res) {
   var milestone = new Milestone({
     type: req.body.type,
     title: req.body.title,
@@ -66,7 +67,7 @@ router.post('/', function(req, res) {
   });
 });
 
-router.put('/:id', function(req, res) {
+router.put('/:id', authenticationService.ensureAuthorized, function(req, res) {
   Milestone.findOne({_id: req.params.id}, function(err, milestoneFromDb) {
 
     milestoneFromDb.type = req.body.type;
@@ -81,7 +82,7 @@ router.put('/:id', function(req, res) {
   });
 });
 
-router.delete('/:id', function(req, res) {
+router.delete('/:id', authenticationService.ensureAuthorized, function(req, res) {
   Milestone.findOne({_id: req.params.id}).remove().exec(function(err) {
     if (err) {
       res.json({
@@ -92,7 +93,6 @@ router.delete('/:id', function(req, res) {
       res.json({});
     }
   });
-
 });
 
 function returnSaveResult(err, milestone, res) {

@@ -19,42 +19,44 @@ angular.module('milestone.services', [])
   });
 
   this.getMilestoneList = function (query, offset) {
-    //return $http.get('http://localhost:3000/milestones?query=' + query + '&offset=' + offset);
+    setAuthHeader();
     return Milestone.query({query: query, offset: offset}).$promise;
   };
 
   this.getMilestone = function(id) {
+    setAuthHeader();
     return Milestone.get({milestoneId: id});
   };
 
   this.addMilestone = function(newMilestone) {
+    setAuthHeader();
     return Milestone.save(newMilestone).$promise;
   };
 
   this.updateMilestone = function(milestone) {
+    setAuthHeader();
     return Milestone.update(milestone).$promise;
   };
 
   this.deleteMilestone = function(milestone) {
+    setAuthHeader();
     return Milestone.delete({}, {'id': milestone.id}).$promise;
   };
 
-})
-
-/*.factory('guid', function() {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
+  // set auth header before every action incase user token changed
+  function setAuthHeader() {
+    $http.defaults.headers.common['authorization']= window.localStorage['authToken'];
   }
 
-  return {
-    new: function() {
-      return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-        s4() + '-' + s4() + s4() + s4();
-    }
+})
+
+.service('userService', function($resource, $http) {
+
+  this.authenticate = function(authRequest) {
+    return $http.post('http://localhost:3000/users/authenticate', authRequest);
   };
-})*/
+
+})
 
 .factory('cameraService', function($q) {
   return {

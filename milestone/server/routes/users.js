@@ -5,13 +5,14 @@ var router = express.Router();
 var env = process.env.NODE_ENV || 'development'
 var config = require('../config')[env];
 var _ = require('lodash-node');
+var authenticationService = require('../services/authentication');
 
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
 router.post('/authenticate', function(req, res) {
-  User.findOne({email: req.body.email, password: req.body.password}, function(err, user) {
+  User.findOne({email: req.body.username, password: req.body.password}, function(err, user) {
     if (err) {
       res.json({
         isAuthenticated: false,
@@ -37,16 +38,19 @@ router.post('/authenticate', function(req, res) {
           });
         });
       }
+      else {
+        res.sendStatus(401);
+      }
     }
   });
 });
 
-router.get('/me', ensureAuthorized, function(req, res) {
+router.get('/me', authenticationService.ensureAuthorized, function(req, res) {
   User.findOne({_id: req.userId}, function(err, userFromDb) {
     if (err) {
       res.json({
         type: false,
-        data: "Error occured: " + err
+        data: "Error occurred: " + err
       });
     } else {
       res.json({
@@ -57,7 +61,7 @@ router.get('/me', ensureAuthorized, function(req, res) {
   });
 });
 
-function ensureAuthorized(req, res, next) {
+/*function ensureAuthorized(req, res, next) {
   var authToken = req.headers["authorization"];
   if (!_.isUndefined(authToken)) {
     var tokenPayload = jwt.decode(authToken, config.tokenSecret);
@@ -75,6 +79,6 @@ function ensureAuthorized(req, res, next) {
   } else {
     res.sendStatus(403);
   }
-}
+}*/
 
 module.exports = router;
