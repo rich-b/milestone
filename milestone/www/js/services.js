@@ -25,7 +25,7 @@ angular.module('milestone.services', [])
 
   this.getMilestone = function(id) {
     setAuthHeader();
-    return Milestone.get({milestoneId: id});
+    return Milestone.get({milestoneId: id}).$promise;
   };
 
   this.addMilestone = function(newMilestone) {
@@ -56,6 +56,27 @@ angular.module('milestone.services', [])
     return $http.post('http://localhost:3000/users/authenticate', authRequest);
   };
 
+})
+
+.service('pictureService', function ($q, $http, $resource) {
+
+  var Pictures = $resource('http://localhost:3000/pictures/:pictureId', {milestoneId:'@id'}, {
+    /*query: {
+      isArray: false
+    },*/
+    update: {
+      method: 'PUT'
+    }
+  });
+
+  this.get = function (query, offset) {
+    setAuthHeader();
+    return Pictures.query({query: query, offset: offset}).$promise;
+  };
+
+  function setAuthHeader() {
+    $http.defaults.headers.common['authorization']= window.localStorage['authToken'];
+  }
 })
 
 .factory('cameraService', function($q) {

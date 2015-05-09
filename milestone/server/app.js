@@ -9,6 +9,7 @@ var routes = require('./routes/index');
 //var userModel = require('./models/User');
 var users = require('./routes/users');
 var milestones = require('./routes/milestones');
+var pictures = require('./routes/pictures');
 
 var env = process.env.NODE_ENV || 'development'
 var config = require('./config')[env]
@@ -40,6 +41,7 @@ app.use(function(req, res, next) {
 app.use('/', routes);
 app.use('/users', users);
 app.use('/milestones', milestones);
+app.use('/pictures', pictures);
 
 
 // catch 404 and forward to error handler

@@ -12,10 +12,15 @@
       </div>
 
       <div class="item item-body">
-        <figure ng-show="ctrl.milestoneModel.mainImage">
-          <img class="full-image" ng-src="{{ctrl.milestoneModel.mainImage.src}}" title="{{ctrl.milestoneModel.mainImage.title}}">
-          <figcaption>{{ctrl.milestoneModel.mainImage.title}}</figcaption>
-        </figure>
+        <div class="image-list" ng-if="ctrl.milestoneModel.images && ctrl.milestoneModel.images.length > 0">
+          <ul rn-carousel rn-carousel-index="ctrl.carouselIndex">
+            <li ng-repeat="image in ctrl.milestoneModel.images">
+              <img class="full-image" ng-src="{{image.src}}" title="{{image.title}}">
+            </li>
+          </ul>
+        </div>
+
+        <figcaption>{{ctrl.milestoneModel.images[ctrl.carouselIndex].title}}</figcaption>
 
         <p>
           {{ctrl.milestoneModel.description}}

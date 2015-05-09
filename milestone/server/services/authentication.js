@@ -9,9 +9,9 @@ module.exports = {
     if (!_.isUndefined(authToken)) {
       var tokenPayload = jwt.decode(authToken, config.tokenSecret);
 
-      console.log('now => ' + new Date().getTime()/1000);
-      console.log('exp => ' + tokenPayload.exp);
-      console.log('userid => ' + tokenPayload.userId);
+      //console.log('now => ' + new Date().getTime()/1000);
+      //console.log('exp => ' + tokenPayload.exp);
+      //console.log('userid => ' + tokenPayload.userId);
 
       if (new Date().getTime()/1000 > tokenPayload.exp || _.isUndefined(tokenPayload.userId)) {
         res.status(403);

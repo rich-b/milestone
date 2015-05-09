@@ -22,7 +22,7 @@ router.post('/authenticate', function(req, res) {
       if (user) {
         var expiryDate = new Date();
         var t = expiryDate.getTime() / 1000; // seconds since epoch
-        var expireInMinutes = 1;
+        var expireInMinutes = 60;
 
         user.token = jwt.sign({
           iat: t,
@@ -33,7 +33,6 @@ router.post('/authenticate', function(req, res) {
         user.save(function(err, user1) {
           res.json({
             isAuthenticated: true,
-            //data: user1,
             token: user1.token
           });
         });
@@ -60,25 +59,5 @@ router.get('/me', authenticationService.ensureAuthorized, function(req, res) {
     }
   });
 });
-
-/*function ensureAuthorized(req, res, next) {
-  var authToken = req.headers["authorization"];
-  if (!_.isUndefined(authToken)) {
-    var tokenPayload = jwt.decode(authToken, config.tokenSecret);
-
-    console.log('now => ' + new Date().getTime()/1000);
-    console.log('exp => ' + tokenPayload.exp);
-    console.log('userid => ' + tokenPayload.userId);
-
-    if (new Date().getTime()/1000 > tokenPayload.exp || _.isUndefined(tokenPayload.userId)) {
-      res.sendStatus(403);
-    } else {
-      req.userId = tokenPayload.userId;
-      next();
-    }
-  } else {
-    res.sendStatus(403);
-  }
-}*/
 
 module.exports = router;

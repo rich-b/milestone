@@ -61,7 +61,8 @@ angular.module('milestone', ['ionic', 'ngResource', 'ngCordova', 'milestone.cont
     url: "/search",
     views: {
       'menuContent': {
-        templateUrl: "templates/search.html"
+        templateUrl: "templates/search.html",
+        controller: "SearchCtrl as ctrl"
       }
     }
   })
@@ -71,6 +72,23 @@ angular.module('milestone', ['ionic', 'ngResource', 'ngCordova', 'milestone.cont
       'menuContent': {
         templateUrl: "templates/view-milestone.html",
         controller: "MilestoneViewCtrl as ctrl"
+      }
+    },
+    resolve: {
+      milestoneResponse: function($q, $stateParams, milestoneService) {
+        var d = $q.defer();
+
+        milestoneService.getMilestone($stateParams.id).then(function(milestone) {
+          d.resolve(milestone);
+        }, function error(err) {
+          if (err.status === 403 || err.status === 401) {
+            d.resolve([]);
+          } else {
+            d.reject(err);
+          }
+        });
+
+        return d.promise;
       }
     }
   })
@@ -115,16 +133,6 @@ angular.module('milestone', ['ionic', 'ngResource', 'ngCordova', 'milestone.cont
         });
 
         return d.promise;
-      }
-    }
-  })
-
-  .state('app.single', {
-    url: "/playlists/:playlistId",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/playlist.html",
-        controller: 'PlaylistCtrl'
       }
     }
   });

@@ -23,15 +23,19 @@ figcaption {
 .image-list {
   height:250px;
   text-align: center;
-  background-color: #E2E2E2;
+  background-color: #f4f4f4;
+}
+
+.image-list-with-indicators ul {
+  height: calc(100% - 30px) !important;
+}
+
+.image-list-with-indicators img {
+  max-height: 250px;
 }
 
 .image-list ul {
-  height: calc(100% - 30px);
-}
-
-.image-list img {
-  max-height: 250px;
+  height: 100%;
 }
 
 .scroll {
@@ -39,9 +43,17 @@ figcaption {
 }
 
 .tabs .selected {
-  color: crimson;
+  color: #387ef5;
 }
 
 .main-panel {
   height: calc(100% - 110px);
+}
+
+.back-button {
+  color: #387ef5 !important;
+}
+
+.item-content {
+  background-color: #F3F7FC !important;
 }

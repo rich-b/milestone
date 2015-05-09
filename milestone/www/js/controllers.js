@@ -52,14 +52,18 @@ angular.module('milestone.controllers', ['milestone.filters'])
   };
 })
 
-.controller('MilestoneViewCtrl', function($location, $stateParams, milestoneService) {
-  this.milestoneModel = {};
+.controller('MilestoneViewCtrl', function($scope, $location, $state, $timeout) {
+  this.milestoneModel = {images:[]};
   var self = this;
 
-  milestoneService.getMilestone($stateParams.id).$promise.then(function(milestone) {
-    self.milestoneModel = milestone;
+  // workaround to watch when the list resolve is refreshed
+  $scope.$state = $state;
+  $scope.$watch('$state.$current.locals.globals.milestoneResponse', function(milestoneResponse) {
+    self.milestoneModel = milestoneResponse;
     if (self.milestoneModel.images && self.milestoneModel.images.length > 0) {
-      self.milestoneModel.mainImage = _.find(self.milestoneModel.images, {isDefault: true}) || self.milestoneModel.images[0];
+      $timeout(function() {
+        self.carouselIndex = _.findIndex(self.milestoneModel.images, {isDefault: true});
+      });
     }
   });
 
@@ -76,14 +80,14 @@ angular.module('milestone.controllers', ['milestone.filters'])
 
   if (_.isUndefined($stateParams.id) || $stateParams.id === '') {
     this.milestoneModel = {
-      date: new Date($filter("date")(Date.now(), 'yyyy-MM-dd'))
+      date: new Date($filter("date")(Date.now(), 'yyyy-MM-dd')),
+      images: []
     };
   } else {
-    milestoneService.getMilestone($stateParams.id).$promise.then(function(milestone) {
+    milestoneService.getMilestone($stateParams.id).then(function(milestone) {
       self.milestoneModel = milestone;
     });
 
-    //self.milestoneModel = milestoneService.getMilestone($stateParams.id);
     self.isNew = false;
   }
 
@@ -112,4 +116,31 @@ angular.module('milestone.controllers', ['milestone.filters'])
     });
   };
 
+  this.addPictureUrl = function() {
+    if (self.newImageUrl && self.newImageUrl.length > 0) {
+      self.milestoneModel.images.push({
+        src: self.newImageUrl
+      });
+
+      self.newImageUrl = '';
+      self.carouselIndex = self.milestoneModel.images.length - 1;
+    }
+  };
+
+  this.defaultImageChanged = function(imageIndex) {
+    var currentImage = self.milestoneModel.images[imageIndex];
+    var newDefaultValue = currentImage.isDefault;
+    if (newDefaultValue) {
+      _.each(self.milestoneModel.images, function(img) {
+        if (img !== currentImage) {
+          img.isDefault = false;
+        }
+      });
+    }
+  };
+
+})
+
+.controller('SearchCtrl', function(pictureService) {
+  pictureService.get();
 });
