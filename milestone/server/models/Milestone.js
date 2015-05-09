@@ -6,6 +6,10 @@ var MilestoneSchema   = new Schema({
   type: String,
   title: String,
   date: { type: Date, default: Date.now },
+  createdDate: { type: Date, default: Date.now },
+  createdBy: Schema.ObjectId,
+  lastModifiedDate: { type: Date },
+  lastModifiedBy: Schema.ObjectId,
   description: String,
   images: [{
     src: String,

@@ -29,12 +29,12 @@
   <div class="list">
 
     <div class="image-list image-list-with-indicators">
-      <ul rn-carousel rn-carousel-index="ctrl.carouselIndex" ng-show="ctrl.milestoneModel.images && ctrl.milestoneModel.images.length > 0">
+      <ul rn-carousel rn-carousel-index="ctrl.carouselIndex" ng-if="ctrl.milestoneModel.images && ctrl.milestoneModel.images.length > 0">
         <li ng-repeat="image in ctrl.milestoneModel.images">
           <img ng-src="{{image.src}}" title="{{image.title}}">
         </li>
       </ul>
-      <div rn-carousel-indicators ng-show="ctrl.milestoneModel.images.length > 1" slides="ctrl.milestoneModel.images" rn-carousel-index="ctrl.carouselIndex"></div>
+      <div rn-carousel-indicators ng-if="ctrl.milestoneModel.images.length > 1" slides="ctrl.milestoneModel.images" rn-carousel-index="ctrl.carouselIndex"></div>
     </div>
 
 

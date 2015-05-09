@@ -57,3 +57,20 @@ figcaption {
 .item-content {
   background-color: #F3F7FC !important;
 }
+
+/** Icon colors **/
+.ion-arrow-graph-up-right {
+  color: rgb(2, 184, 52);
+}
+
+.ion-calendar {
+  color: rgb(237, 107, 127);
+}
+
+.ion-happy {
+  color: rgb(231, 231, 17);
+}
+
+.ion-ribbon-a {
+  color: gold;
+}

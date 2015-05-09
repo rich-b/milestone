@@ -40,6 +40,10 @@ router.get('/:id', authenticationService.ensureAuthorized, function(req, res, ne
         err: err
       });
     }
+    else if (!milestoneFromDb) {
+      res.status(404);
+      res.json({message: 'Milestone not found.'});
+    }
     else {
       res.json(mapSchemaMilestoneToModel(milestoneFromDb));
     }
@@ -59,7 +63,9 @@ router.post('/', authenticationService.ensureAuthorized, function(req, res) {
         isDefault: i.isDefault,
         tags: i.tags
       }
-    })
+    }),
+    createdBy: req.userId,
+    createdDate: new Date()
   });
 
   milestone.save(function(err, updatedMilestone) {
@@ -75,6 +81,8 @@ router.put('/:id', authenticationService.ensureAuthorized, function(req, res) {
     milestoneFromDb.date = req.body.date;
     milestoneFromDb.description = req.body.description;
     milestoneFromDb.images = req.body.images;
+    milestoneFromDb.lastModifiedBy = req.userId;
+    milestoneFromDb.lastModifiedDate = new Date();
 
     milestoneFromDb.save(function(err, updatedMilestone) {
       return returnSaveResult(err, updatedMilestone, res);
