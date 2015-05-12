@@ -16,7 +16,7 @@ var config = require('./config')[env]
 var mongoose = require('mongoose');
 
 // Set db connection
-mongoose.connect(config.db);
+mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL || config.db);
 
 var app = express();
 
