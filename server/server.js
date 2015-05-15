@@ -13,7 +13,7 @@ var http = require('http');
  */
 
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
-var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var port = process.env.OPENSHIFT_NODEJS_PORT || 8100;
 app.set('port', port);
 
 
@@ -30,6 +30,8 @@ var server = http.createServer(app);
 server.listen(port, ipaddress);
 server.on('error', onError);
 server.on('listening', onListening);
+
+console.log('Example app listening at http://%s:%s', ipaddress, port);
 
 /**
  * Normalize a port into a number, string, or false.
