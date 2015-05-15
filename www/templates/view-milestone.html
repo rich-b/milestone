@@ -1,0 +1,45 @@
+<ion-view view-title="View Milestone">
+  <ion-nav-buttons side="right">
+    <button class="button button-clear button-positive" ng-click="ctrl.edit()">Edit</button>
+  </ion-nav-buttons>
+
+  <ion-content>
+    <div class="list card">
+      <div class="item item-avatar">
+        <div class="milestone-type {{ctrl.milestoneModel.type | typeIcon}}"></div>
+        <h2>{{ctrl.milestoneModel.title}}</h2>
+        <p>{{ctrl.milestoneModel.date | date}}</p>
+      </div>
+
+      <div class="item item-body">
+        <div class="image-list" ng-if="ctrl.milestoneModel.images && ctrl.milestoneModel.images.length > 0">
+          <ul rn-carousel rn-carousel-index="ctrl.carouselIndex">
+            <li ng-repeat="image in ctrl.milestoneModel.images">
+              <img class="full-image" ng-src="{{image.src}}" title="{{image.title}}">
+            </li>
+          </ul>
+        </div>
+
+        <figcaption>{{ctrl.milestoneModel.images[ctrl.carouselIndex].title}}</figcaption>
+
+        <p>
+          {{ctrl.milestoneModel.description}}
+        </p>
+      </div>
+
+      <div class="item tabs tabs-secondary tabs-icon-left">
+
+        <a class="tab-item" href="#">
+          <i class="icon ion-chatbox"></i>
+          Comment
+        </a>
+        <a class="tab-item active" href="#">
+          <i class="icon ion-share"></i>
+          Share
+        </a>
+      </div>
+
+    </div>
+
+  </ion-content>
+</ion-view>

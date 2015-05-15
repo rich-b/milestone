@@ -1,3 +1,4 @@
+/*
 var Flickr = require("flickrapi");
 var flickrOptions = {
   api_key: '5a6da127d30afbfedff3de256cfcdc7b',
@@ -35,4 +36,4 @@ module.exports = {
     flickrOptions.exchange = verificationResponse;
 
   }
-};
+};*/
