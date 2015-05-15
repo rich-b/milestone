@@ -4,6 +4,7 @@ var jwt = require('jsonwebtoken');
 var router = express.Router();
 var env = process.env.NODE_ENV || 'development'
 var config = require('../config')[env];
+var tokenSecret = process.env.TOKEN_SECRET || config.tokenSecret;
 var _ = require('lodash-node');
 var authenticationService = require('../services/authentication');
 
@@ -28,7 +29,7 @@ router.post('/authenticate', function(req, res) {
           iat: t,
           exp: t + (expireInMinutes*60),
           userId: user._id
-        }, config.tokenSecret);
+        }, tokenSecret);
 
         user.save(function(err, user1) {
           res.json({

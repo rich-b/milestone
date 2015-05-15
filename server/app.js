@@ -16,7 +16,12 @@ var config = require('./config')[env]
 var mongoose = require('mongoose');
 
 // Set db connection
-mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL || config.db);
+if (process.env.OPENSHIFT_MONGODB_DB_URL) {
+  mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL + 'milestone');
+}
+else {
+  mongoose.connect(config.db);
+}
 
 
 var app = express();
