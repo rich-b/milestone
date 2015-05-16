@@ -119,13 +119,13 @@ angular.module('milestone', ['ionic', 'ngResource', 'ngCordova', 'milestone.cont
       }
     },
     resolve: {
-      imageSrc: function($q, $stateParams, milestoneService) {
+      image: function($q, $stateParams, milestoneService) {
         var d = $q.defer();
 
         milestoneService.getMilestone($stateParams.id).then(function(milestone) {
           var image = _.find(milestone.images, {_id: $stateParams.imageId});
-          if (image && image.src) {
-            d.resolve(image.src);
+          if (image) {
+            d.resolve(image);
           } else {
             d.reject();
           }

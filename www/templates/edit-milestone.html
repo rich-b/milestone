@@ -1,11 +1,13 @@
-<ion-view view-title="Edit Milestone">
+<ion-view>
+  <ion-nav-title>
+    Edit {{ctrl.milestoneModel.title}}
+  </ion-nav-title>
+  <ion-nav-buttons side="right">
+    <button class="button button-positive" ng-click="ctrl.save()">Save</button>
+  </ion-nav-buttons>
   <ion-content>
 
     <div class="main-panel" ng-include src="'templates/modify-milestone.html'"></div>
-
-    <button class="button button-block button-positive" ng-click="ctrl.save()">
-      Update
-    </button>
 
   </ion-content>
 

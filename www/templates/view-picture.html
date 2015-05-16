@@ -1,8 +1,7 @@
-<ion-view view-title="Milestone Picture">
+<ion-view view-title="{{ctrl.image.title || 'View Picture'}}">
   <ion-content>
-    <div class="card">
-      <img class="milestone-picture full-size-image" ng-src="{{ctrl.imageSrc}}">
-    </div>
+
+    <img class="milestone-picture full-size-image" ng-src="{{ctrl.image.src}}">
 
   </ion-content>
 </ion-view>

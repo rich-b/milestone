@@ -72,8 +72,8 @@ angular.module('milestone.controllers', ['milestone.filters'])
   };
 })
 
-.controller('MilestoneViewImageCtrl', function(imageSrc) {
-  this.imageSrc = imageSrc;
+.controller('MilestoneViewImageCtrl', function(image) {
+  this.image = image;
 })
 
 .controller('MilestoneEditCtrl', function($filter, $location, $stateParams, milestoneService, cameraService) {
