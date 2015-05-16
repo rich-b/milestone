@@ -43,7 +43,7 @@
       <input type="text" ng-model="ctrl.milestoneModel.images[ctrl.carouselIndex].title">
     </label>
     <label class="item item-input">
-      <span class="input-label">Is Album Default</span>
+      <span class="input-label">Album Default</span>
 
       <label class="toggle">
         <input type="checkbox" ng-model="ctrl.milestoneModel.images[ctrl.carouselIndex].isDefault" ng-change="ctrl.defaultImageChanged(ctrl.carouselIndex)">
@@ -53,29 +53,6 @@
       </label>
     </label>
   </div>
-
-
-  <!--<label class="item item-input item-stacked-label">
-    <span class="input-label">Images</span>
-    <div class="image-list">
-      <ul rn-carousel rn-carousel-index="carouselIndex">
-        <li ng-repeat="image in ctrl.milestoneModel.images">
-          <img ng-src="{{image.src}}" title="{{image.title}}">
-          <input type="text" ng-model="image.title" placeholder="Caption">
-
-          <span class="item item-checkbox">
-            <label class="checkbox">
-              <input type="checkbox" ng-model="image.isDefault">
-            </label>
-            Is Default?
-          </span>
-
-        </li>
-      </ul>
-      <div rn-carousel-indicators ng-if="ctrl.milestoneModel.images.length > 1" slides="ctrl.milestoneModel.images" rn-carousel-index="carouselIndex"></div>
-    </div>
-  </label>
--->
 
 
 
@@ -89,7 +66,8 @@
     Add Picture
   </button>
 
-  <button class="button button-assertive" ng-click="ctrl.removePicture()">
+  <button class="button button-assertive remove-picture-button" ng-click="ctrl.removePicture()" ng-show="ctrl.milestoneModel.images.length > 0 && ctrl.carouselIndex >= 0">
+    <i class="ion-close-circled"></i>
     Remove Picture
   </button>
 
