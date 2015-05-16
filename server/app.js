@@ -26,6 +26,14 @@ else {
 
 var app = express();
 
+// require ssl
+app.use(function (req, res, next) {
+  if (env !== 'development' && req.headers['x-forwarded-proto'] === 'http') {
+    return res.redirect(301, 'https://' + req.get('host') + req.url);
+  }
+  next();
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -46,13 +54,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-// require ssl
-app.use(function (req, res, next) {
-  if (env !== 'development' && req.headers['x-forwarded-proto'] === 'http') {
-    return res.redirect('https://' + req.get('host') + req.url);
-  }
-  next();
-});
+
 
 //app.use('/', routes);
 app.use('/users', users);
