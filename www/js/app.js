@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('milestone', ['ionic', 'ngResource', 'ngCordova', 'milestone.controllers', 'milestone.services', 'milestone.filters', 'angular-carousel'])
+angular.module('milestone', ['ionic', 'ngResource', 'ngCordova', 'milestone.controllers', 'milestone.directives', 'milestone.services', 'milestone.filters', 'angular-carousel'])
 
 .run(function($ionicPlatform, $rootScope, $ionicModal, $state, userService) {
   $ionicPlatform.ready(function() {

@@ -46,10 +46,23 @@ app.use(function(req, res, next) {
   next();
 });
 
+// require ssl
+app.use(function (req, res, next) {
+  if (env !== 'development' && !req.secure) {
+    return res.redirect('https://' + req.get('host') + req.url);
+  }
+  next();
+});
+
 //app.use('/', routes);
 app.use('/users', users);
 app.use('/milestones', milestones);
 app.use('/pictures', pictures);
+
+
+
+
+
 
 
 // catch 404 and forward to error handler

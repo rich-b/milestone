@@ -95,4 +95,8 @@ figcaption {
   float: right;
 }
 
+.full-width-picture {
+  width: 100%;
+}
+
 
