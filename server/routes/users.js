@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/authenticate', function(req, res) {
-  User.findOne({email: req.body.username, password: req.body.password}, function(err, user) {
+  User.findOne({email: req.body.username.toLowerCase(), password: req.body.password}, function(err, user) {
     if (err) {
       res.json({
         isAuthenticated: false,
@@ -23,7 +23,7 @@ router.post('/authenticate', function(req, res) {
       if (user) {
         var expiryDate = new Date();
         var t = expiryDate.getTime() / 1000; // seconds since epoch
-        var expireInMinutes = 60;
+        var expireInMinutes = 7200; // 5 days
 
         user.token = jwt.sign({
           iat: t,
