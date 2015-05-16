@@ -5,8 +5,8 @@
 }
 @media all and (orientation:landscape) {
   .full-size-image {
-    height: 100%;
-    max-width: inherit !important;
+    height: auto;
+    width: auto;
   }
 }
 
