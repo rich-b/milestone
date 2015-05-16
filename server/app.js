@@ -48,7 +48,7 @@ app.use(function(req, res, next) {
 
 // require ssl
 app.use(function (req, res, next) {
-  if (env !== 'development' && !req.secure) {
+  if (env !== 'development' && req.headers['x-forwarded-proto'] === 'http') {
     return res.redirect('https://' + req.get('host') + req.url);
   }
   next();
