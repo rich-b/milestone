@@ -72,6 +72,10 @@ angular.module('milestone.controllers', ['milestone.filters'])
   };
 })
 
+.controller('MilestoneViewImageCtrl', function(imageSrc) {
+  this.imageSrc = imageSrc;
+})
+
 .controller('MilestoneEditCtrl', function($filter, $location, $stateParams, milestoneService, cameraService) {
   this.milestoneModel = {};
   this.isNew = true;
@@ -125,6 +129,10 @@ angular.module('milestone.controllers', ['milestone.filters'])
       self.newImageUrl = '';
       self.carouselIndex = self.milestoneModel.images.length - 1;
     }
+  };
+
+  this.removePicture = function() {
+    self.milestoneModel.images.splice(self.carouselIndex, 1);
   };
 
   this.defaultImageChanged = function(imageIndex) {

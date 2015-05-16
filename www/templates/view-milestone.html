@@ -15,7 +15,9 @@
         <div class="image-list" ng-if="ctrl.milestoneModel.images && ctrl.milestoneModel.images.length > 0">
           <ul rn-carousel rn-carousel-index="ctrl.carouselIndex">
             <li ng-repeat="image in ctrl.milestoneModel.images">
-              <img class="full-image" ng-src="{{image.src}}" title="{{image.title}}">
+              <a ng-href="#/app/view-milestone/{{ctrl.milestoneModel.id}}/images/{{image._id}}">
+                <img class="milestone-picture" ng-src="{{image.src}}" title="{{image.title}}">
+              </a>
             </li>
           </ul>
         </div>
