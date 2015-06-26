@@ -18,7 +18,8 @@
     "mongoose": "^3.8.25",
     "morgan": "~1.5.1",
     "request": "^2.58.0",
-    "serve-favicon": "~2.2.0"
+    "serve-favicon": "~2.2.0",
+    "xml2js": "^0.4.9"
   },
   "engines": {
     "node": ">=0.10.0"
