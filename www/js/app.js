@@ -7,6 +7,12 @@
 angular.module('milestone', ['ionic', 'ngResource', 'ngCordova', 'milestone.controllers', 'milestone.directives', 'milestone.services', 'milestone.filters', 'angular-carousel'])
 
 .run(function($ionicPlatform, $rootScope, $ionicModal, $state, userService) {
+
+  // hack for local testing with service being on different port
+  if (document.location.hostname == "localhost") {
+    $rootScope.serviceUriPrefix = 'http://localhost:3000';
+  }
+
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -45,6 +51,7 @@ angular.module('milestone', ['ionic', 'ngResource', 'ngCordova', 'milestone.cont
   $rootScope.$on('displayLoginDialog', function() {
     $rootScope.modal.show();
   });
+
 })
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, $provide) {

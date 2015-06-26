@@ -4,3 +4,5 @@ hooks
 node_modules
 platforms
 plugins
+data
+config.js

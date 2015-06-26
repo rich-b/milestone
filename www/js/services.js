@@ -1,8 +1,9 @@
 angular.module('milestone.services', [])
 
-.service('milestoneService', function ($q, $http, $resource) {
+.service('milestoneService', function ($rootScope, $q, $http, $resource) {
 
-  var Milestone = $resource('/milestones/:milestoneId', {milestoneId:'@id'}, {
+  var resourceUri = $rootScope.serviceUriPrefix + '/milestones/:milestoneId';
+  var Milestone = $resource(resourceUri, {milestoneId:'@id'}, {
     query: {
       isArray: false
     },
@@ -50,17 +51,19 @@ angular.module('milestone.services', [])
 
 })
 
-.service('userService', function($resource, $http) {
+.service('userService', function($rootScope, $resource, $http) {
 
   this.authenticate = function(authRequest) {
-    return $http.post('/users/authenticate', authRequest);
+    var resourceUri = $rootScope.serviceUriPrefix + '/users/authenticate';
+    return $http.post(resourceUri, authRequest);
   };
 
 })
 
-.service('pictureService', function ($q, $http, $resource) {
+.service('pictureService', function ($rootScope, $q, $http, $resource) {
 
-  var Pictures = $resource('/pictures/:pictureId', {milestoneId:'@id'}, {
+  var resourceUri = $rootScope.serviceUriPrefix + '/pictures/:pictureId';
+  var Pictures = $resource(resourceUri, {milestoneId:'@id'}, {
     /*query: {
       isArray: false
     },*/
