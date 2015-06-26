@@ -9,6 +9,7 @@ angular.module('milestone', ['ionic', 'ngResource', 'ngCordova', 'milestone.cont
 .run(function($ionicPlatform, $rootScope, $ionicModal, $state, userService) {
 
   // hack for local testing with service being on different port
+  $rootScope.serviceUriPrefix = '';
   if (document.location.hostname == "localhost") {
     $rootScope.serviceUriPrefix = 'http://localhost:3000';
   }
