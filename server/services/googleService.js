@@ -106,10 +106,34 @@ function upload(fileName, options, callback) {
   });
 }
 
+function uploadEncodedStringAsImage(base64Image, options, callback) {
+
+  var token = options.token;
+  var userId = options.userId || 'default';
+  var rootUrl = 'https://picasaweb.google.com/data/feed/api/user/' +
+    userId + '/albumid/' +
+    options.albumId;
+
+  var decodedImage = new Buffer(base64Image, 'base64');//.toString('binary');
+
+  request({
+    method:'POST',
+    headers:{
+      'GData-Version': '2',
+      'Authorization':'Bearer' + ' ' + token,
+      "Content-Type":'image/jpeg',
+      'Content-Length':decodedImage.length,
+      "MIME-version":"1.0"},
+    body:decodedImage,
+    uri:rootUrl
+  }, callback);
+
+}
+
 module.exports = {
   requestAccess: requestAccess,
   getTokenFromCode: getTokenFromCode,
-  uploadPicture: function(userId, callback) {
+  uploadPicture: function(userId, b64ImageString, callback) {
 
     User.findOne({_id: userId}, function(err, user) {
       if (err) {
@@ -133,7 +157,8 @@ module.exports = {
             tokens.expiry_date = oauth2Client.credentials.expiry_date;
             tokens.save();
 
-            upload('/Users/v733647/Downloads/IMG_5054.jpg', {
+            //upload('/Users/v733647/Downloads/IMG_5054.jpg', {
+            uploadEncodedStringAsImage(b64ImageString, {
               albumId: user.picassawebAlbumId,
               userId: user.picassawebUserId,
               token: oauth2Client.credentials.access_token
@@ -149,7 +174,7 @@ module.exports = {
                 });
               }
               else {
-                console.error('Error', response.statusCode, body);
+                console.error('Error', response ? response.statusCode: '', body);
               }
             });
 

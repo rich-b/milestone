@@ -76,7 +76,14 @@ angular.module('milestone.controllers', ['milestone.filters'])
   this.image = image;
 })
 
-.controller('MilestoneEditCtrl', function($filter, $location, $stateParams, milestoneService, cameraService) {
+.controller('MilestoneEditCtrl', function(
+    $rootScope,
+    $filter,
+    $location,
+    $stateParams,
+    milestoneService,
+    pictureService
+) {
   this.milestoneModel = {};
   this.isNew = true;
   this.displayTab = 'details';
@@ -111,13 +118,17 @@ angular.module('milestone.controllers', ['milestone.filters'])
     }
   };
 
-  this.takePicture = function() {
-    cameraService.getPicture().then(function(imageURI) {
-      self.imgUri = imageURI;
-      console.log(imageURI);
-    }, function(err) {
-      console.err(err);
+  $rootScope.$on('PICTURE_TAKEN', function(event, encodedImage) {
+    pictureService.upload(encodedImage).then(function(response) {
+      self.milestoneModel.images.push({
+        src: response.imageUrl
+      });
     });
+  });
+
+
+  this.takePicture = function() {
+    $rootScope.showCamera = true;
   };
 
   this.addPictureUrl = function() {

@@ -99,4 +99,18 @@ figcaption {
   width: 100%;
 }
 
+#camera {
+  background: #494949;
+  position: absolute;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+}
+
+#camera .take-picture-buttons {
+  bottom: 100px;
+  position: absolute;
+  left: calc(50% - 97px);
+}
+
 

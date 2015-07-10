@@ -7,10 +7,10 @@ var authenticationService = require('../services/authentication');
 var googleService = require('../services/googleService');
 var url = require('url');
 
-router.get('/', authenticationService.ensureAuthorized, function(req, res, next) {
-  googleService.uploadPicture(req.userId, function(url) {
+router.post('/', authenticationService.ensureAuthorized, function(req, res, next) {
+  googleService.uploadPicture(req.userId, req.body.encodedImage, function(url) {
     res.json({
-      url: url
+      imageUrl: url
     });
   });
 });
@@ -20,10 +20,10 @@ router.get('/verify', function(req, res, next) {
 
   var url_parts = url.parse(req.url, true);
   var query = url_parts.query;
-  googleService.getTokenFromCode()
+  googleService.getTokenFromCode();
 
   res.status(200);
-  res.write('Authorisation was received.  You can safely close this browser window.');
+  res.write('Authorization was received.  You can safely close this browser window.');
 });
 
 module.exports = router;

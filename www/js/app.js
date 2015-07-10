@@ -14,6 +14,8 @@ angular.module('milestone', ['ionic', 'ngResource', 'ngCordova', 'milestone.cont
     $rootScope.serviceUriPrefix = 'http://localhost:3000';
   }
 
+  $rootScope.showCamera = false;
+
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)

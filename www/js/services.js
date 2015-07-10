@@ -77,21 +77,90 @@ angular.module('milestone.services', [])
     return Pictures.query({query: query, offset: offset}).$promise;
   };
 
+  this.upload = function(encodedImage) {
+    setAuthHeader();
+    return Pictures.save({encodedImage: encodedImage}).$promise;
+  };
+
   function setAuthHeader() {
     $http.defaults.headers.common['authorization']= window.localStorage['authToken'];
   }
 })
 
-.factory('cameraService', function($q) {
+.factory('cameraService', function($rootScope, $q) {
+  var localMediaStream = undefined;
+  var _cameraIsVisible = false;
+
   return {
+    cameraIsVisible: _cameraIsVisible,
+    loadCamera: function() {
+      var hdConstraints = {
+        video: {
+          mandatory: {
+            minWidth: 1280,
+            minHeight: 720
+          }
+        }
+      };
+
+      navigator.webkitGetUserMedia(hdConstraints, function(stream) {
+        var video = document.getElementById('pictureVideo');
+        video.src = window.URL.createObjectURL(stream);
+        localMediaStream = stream;
+      }, function(err) {
+        console.log(err);
+      });
+    },
+    turnOffCamera: function() {
+      if (localMediaStream) localMediaStream.stop();
+    },
+    takePicture: function() {
+      var canvas = document.getElementById('pictureCanvas');
+      var video = document.getElementById('pictureVideo');
+
+      //canvas.width = video.clientWidth;
+      //canvas.height = video.clientHeight;
+
+      canvas.getContext('2d').drawImage(video, 0, 0);
+      var dataUrl = canvas.toDataURL('image/webp');
+      var img = dataUrl.substring(dataUrl.indexOf(',')+1);
+
+      if (localMediaStream) localMediaStream.stop();
+
+      return img;
+    },
     getPicture: function(options) {
       var d = $q.defer();
 
-      navigator.camera.getPicture(function(result) {
+      //if (Modernizr.getusermedia) {
+        //var gUM = Modernizr.prefixed('getUserMedia', navigator);
+        //gUM({video: true}, function(stream) {
+        navigator.webkitGetUserMedia({video: true}, function(stream) {
+
+          var video = document.getElementById('pictureVideo');
+          //var canvas = document.createElement("canvas");
+          var canvas = document.getElementById('pictureCanvas');
+
+          video.src = stream;
+          //canvas.getContext('2d').drawImage(video, 0, 0, 300, 300, 0, 0, 300, 300);
+          canvas.getContext('2d').drawImage(video, 0, 0);
+          var dataUrl = canvas.toDataURL('image/webp');
+
+          var img = dataUrl.substring(dataUrl.indexOf(',')+1);
+
+          stream.stop();
+
+          d.resolve(img);
+        }, function(err) {
+          console.log(err);
+        });
+      //}
+
+      /*navigator.camera.getPicture(function(result) {
         d.resolve(result);
       }, function(err) {
         d.reject(err);
-      }, options);
+      }, options);*/
 
       return d.promise;
     }
