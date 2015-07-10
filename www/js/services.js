@@ -132,10 +132,11 @@ angular.module('milestone.services', [])
     getPicture: function(options) {
       var d = $q.defer();
 
-      //if (Modernizr.getusermedia) {
-        //var gUM = Modernizr.prefixed('getUserMedia', navigator);
-        //gUM({video: true}, function(stream) {
-        navigator.webkitGetUserMedia({video: true}, function(stream) {
+      //todo - run custom build of modernizr for only the checks i need... and minify
+
+      if (Modernizr.getusermedia) {
+        var gUM = Modernizr.prefixed('getUserMedia', navigator);
+        gUM({video: true}, function(stream) {
 
           var video = document.getElementById('pictureVideo');
           //var canvas = document.createElement("canvas");
@@ -154,13 +155,7 @@ angular.module('milestone.services', [])
         }, function(err) {
           console.log(err);
         });
-      //}
-
-      /*navigator.camera.getPicture(function(result) {
-        d.resolve(result);
-      }, function(err) {
-        d.reject(err);
-      }, options);*/
+      }
 
       return d.promise;
     }

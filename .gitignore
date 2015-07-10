@@ -7,3 +7,4 @@ plugins
 data
 config.js
 bower_components
+www/lib
