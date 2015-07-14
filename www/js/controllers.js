@@ -126,9 +126,30 @@ angular.module('milestone.controllers', ['milestone.filters'])
     });
   });
 
+  this.fileSelected = function() {
+    var f = document.getElementById('fileToUpload').files[0];
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      var dataUrl = reader.result;
+      var img = dataUrl.substring(dataUrl.indexOf(',')+1);
+
+      pictureService.upload(img).then(function(response) {
+        self.milestoneModel.images.push({
+          src: response.imageUrl
+        });
+      });
+    };
+
+    reader.readAsDataURL(f);
+  };
 
   this.takePicture = function() {
     $rootScope.showCamera = true;
+  };
+
+  this.openFileDialog = function() {
+    ionic.trigger('click', {target: document.getElementById('fileToUpload')});
   };
 
   this.addPictureUrl = function() {
