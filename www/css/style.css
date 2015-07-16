@@ -10,6 +10,10 @@
   }
 }
 
+textarea {
+  height: 60px;
+}
+
 .milestone-type {
   position: absolute;
   top: 16px;
@@ -34,7 +38,6 @@ figcaption {
 .image-list {
   height:250px;
   text-align: center;
-  background-color: #f4f4f4;
 }
 
 .image-list-with-indicators ul {
@@ -66,24 +69,33 @@ figcaption {
 }
 
 .item-content {
-  background-color: #F3F7FC !important;
+  /*background-color: #F3F7FC !important;*/
+  /*background-color: #4D4D4D !important;*/
 }
 
 /** Icon colors **/
 .ion-arrow-graph-up-right {
-  color: rgb(2, 184, 52);
+  color: #60BD68;
 }
 
 .ion-calendar {
-  color: rgb(237, 107, 127);
+  color: #F15854;
 }
 
 .ion-happy {
-  color: rgb(231, 231, 17);
+  color: #DECF3F;
 }
 
 .ion-ribbon-a {
-  color: gold;
+  color: #FAA43A;
+}
+
+.ion-medkit {
+  color: #5DA5DA;
+}
+
+.ion-clock {
+  color: #B2912F;
 }
 
 .milestone-picture {

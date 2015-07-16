@@ -5,10 +5,7 @@
 <div ng-show="ctrl.displayTab === 'details'">
   <label class="item item-input item-select">
     <span class="input-label">Type</span>
-    <select ng-model="ctrl.milestoneModel.type">
-      <option>Firsts</option>
-      <option>Happy Moment</option>
-      <option>Event</option>
+    <select ng-model="ctrl.milestoneModel.type" ng-options="t.name as t.name for t in ctrl.milestoneTypes">
     </select>
   </label>
   <label class="item item-input">
@@ -18,9 +15,14 @@
     <input type="date" ng-model="ctrl.milestoneModel.date" placeholder="Date">
   </label>
   <label class="item item-input">
+    <textarea ng-model="ctrl.milestoneModel.activities" placeholder="Activities"></textarea>
+  </label>
+  <label class="item item-input">
     <textarea ng-model="ctrl.milestoneModel.description" placeholder="Description"></textarea>
   </label>
-
+  <label class="item item-input">
+    <textarea ng-model="ctrl.milestoneModel.favorites" placeholder="Favorite Parts"></textarea>
+  </label>
 
 
 </div>

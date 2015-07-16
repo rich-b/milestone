@@ -56,6 +56,8 @@ router.post('/', authenticationService.ensureAuthorized, function(req, res) {
     title: req.body.title,
     date: req.body.date,
     description: req.body.description,
+    activities: req.body.activities,
+    favorites: req.body.favorites,
     images: _.map(req.body.images, function(i) {
       return {
         src: i.src,
@@ -80,6 +82,8 @@ router.put('/:id', authenticationService.ensureAuthorized, function(req, res) {
     milestoneFromDb.title = req.body.title;
     milestoneFromDb.date = req.body.date;
     milestoneFromDb.description = req.body.description;
+    milestoneFromDb.activities = req.body.activities;
+    milestoneFromDb.favorites = req.body.favorites;
     milestoneFromDb.images = req.body.images;
     milestoneFromDb.lastModifiedBy = req.userId;
     milestoneFromDb.lastModifiedDate = new Date();
@@ -125,6 +129,8 @@ function mapSchemaMilestoneToModel(milestone) {
     title: milestone.title,
     date: milestone.date,
     description: milestone.description,
+    favorites: milestone.favorites,
+    activities: milestone.activities,
     images: milestone.images
   }
 }

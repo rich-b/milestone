@@ -200,8 +200,10 @@ angular.module('milestone', ['ionic', 'ngResource', 'ngCordova', 'milestone.cont
 })
 
 .constant('milestoneTypes', [
+  {name:'Daily', iconClass:'ion-calendar'},
+  {name:'Medical', iconClass:'ion-medkit'},
   {name:'Firsts', iconClass:'ion-arrow-graph-up-right'},
-  {name:'Happy Moment', iconClass:'ion-happy'},
-  {name:'Event', iconClass:'ion-calendar'},
+  {name:'Memorable Moment', iconClass:'ion-happy'},
+  {name:'Event', iconClass:'ion-clock'},
   {name:'Achievement', iconClass:'ion-ribbon-a'}
 ]);

@@ -11,6 +11,8 @@ var MilestoneSchema   = new Schema({
   lastModifiedDate: { type: Date },
   lastModifiedBy: Schema.ObjectId,
   description: String,
+  favorites: String,
+  activities: String,
   images: [{
     src: String,
     title: String,

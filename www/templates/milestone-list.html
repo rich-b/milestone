@@ -6,7 +6,7 @@
 
   <ion-content>
     <ion-list>
-      <ion-item show-delete="true" ng-repeat="milestone in ctrl.milestones" href="#/app/view-milestone/{{milestone.id}}">
+      <ion-item show-delete="true" class="item-icon-left" ng-repeat="milestone in ctrl.milestones" href="#/app/view-milestone/{{milestone.id}}">
         <i class="icon {{milestone.type | typeIcon}}"></i>
         <span>{{milestone.title}}</span>
 

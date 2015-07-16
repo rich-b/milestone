@@ -81,12 +81,14 @@ angular.module('milestone.controllers', ['milestone.filters'])
     $filter,
     $location,
     $stateParams,
+    milestoneTypes,
     milestoneService,
     pictureService
 ) {
   this.milestoneModel = {};
   this.isNew = true;
   this.displayTab = 'details';
+  this.milestoneTypes = milestoneTypes;
   var self = this;
 
   if (_.isUndefined($stateParams.id) || $stateParams.id === '') {
@@ -182,5 +184,5 @@ angular.module('milestone.controllers', ['milestone.filters'])
 })
 
 .controller('SearchCtrl', function(pictureService) {
-  pictureService.get();
+  //pictureService.get();
 });
