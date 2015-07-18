@@ -15,10 +15,7 @@ router.get('/', function(req, res, next) {
 router.post('/authenticate', function(req, res) {
   User.findOne({email: req.body.username.toLowerCase(), password: req.body.password}, function(err, user) {
     if (err) {
-      res.json({
-        isAuthenticated: false,
-        data: "Error during authentication: " + err
-      });
+      res.status(500).send({message: 'Error during authentication: ' + err});
     } else {
       if (user) {
         var expiryDate = new Date();
@@ -48,10 +45,7 @@ router.post('/authenticate', function(req, res) {
 router.get('/me', authenticationService.ensureAuthorized, function(req, res) {
   User.findOne({_id: req.userId}, function(err, userFromDb) {
     if (err) {
-      res.json({
-        type: false,
-        data: "Error occurred: " + err
-      });
+      res.status(500).send({message: 'Error during authentication: ' + err});
     } else {
       res.json({
         type: true,

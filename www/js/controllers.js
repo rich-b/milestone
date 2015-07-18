@@ -13,7 +13,7 @@ angular.module('milestone.controllers', ['milestone.filters'])
   };
 })
 
-.controller('MilestoneListCtrl', function($scope, $location, $state, $cordovaToast, milestoneService) {
+.controller('MilestoneListCtrl', function($scope, $location, $state, milestoneService, ngNotify) {
   var self = this;
 
   // workaround to watch when the list resolve is refreshed
@@ -34,9 +34,7 @@ angular.module('milestone.controllers', ['milestone.filters'])
   this.delete = function(item) {
     milestoneService.deleteMilestone(item).then(function success() {
       $state.reload();
-    }, function error(err) {
-      $cordovaToast.showLongBottom(err.statusText || err);
-    });
+    }, handleError);
   };
 
   this.moreMilestonesExist = function() {
@@ -48,8 +46,12 @@ angular.module('milestone.controllers', ['milestone.filters'])
       Array.prototype.push.apply(self.milestones, response.results);
       $scope.$broadcast('scroll.infiniteScrollComplete');
       $scope.$broadcast('scroll.resize');
-    });
+    }, handleError);
   };
+
+  function handleError(err) {
+    ngNotify.set(err.data.message || 'Error!', 'error');
+  }
 })
 
 .controller('MilestoneViewCtrl', function($scope, $location, $state, $timeout) {
@@ -83,7 +85,8 @@ angular.module('milestone.controllers', ['milestone.filters'])
     $stateParams,
     milestoneTypes,
     milestoneService,
-    pictureService
+    pictureService,
+    ngNotify
 ) {
   this.milestoneModel = {};
   this.isNew = true;
@@ -108,15 +111,11 @@ angular.module('milestone.controllers', ['milestone.filters'])
     if (this.isNew) {
       milestoneService.addMilestone(self.milestoneModel).then(function success() {
         $location.path('/app/milestone-list');
-      }, function error(err) {
-        console.log(err);
-      });
+      }, handleError);
     } else {
       milestoneService.updateMilestone(self.milestoneModel).then(function success() {
         $location.path('/app/milestone-list');
-      }, function error(err) {
-        console.log(err);
-      });
+      }, handleError);
     }
   };
 
@@ -125,6 +124,7 @@ angular.module('milestone.controllers', ['milestone.filters'])
       self.milestoneModel.images.push({
         src: response.imageUrl
       });
+      ngNotify.set('Image successfully added', 'success');
     });
   });
 
@@ -136,11 +136,18 @@ angular.module('milestone.controllers', ['milestone.filters'])
       var dataUrl = reader.result;
       var img = dataUrl.substring(dataUrl.indexOf(',')+1);
 
-      pictureService.upload(img).then(function(response) {
-        self.milestoneModel.images.push({
-          src: response.imageUrl
-        });
-      });
+      pictureService.upload(img).then(
+        function success(response) {
+          self.milestoneModel.images.push({
+            src: response.imageUrl
+          });
+          ngNotify.set('Image successfully added', 'success');
+        }, handleError
+      );
+    };
+
+    reader.onerror = function(e) {
+      ngNotify.set('Error reading file: ' + reader.error, 'error');
     };
 
     reader.readAsDataURL(f);
@@ -180,6 +187,10 @@ angular.module('milestone.controllers', ['milestone.filters'])
       });
     }
   };
+
+  function handleError(err) {
+    ngNotify.set(err.data.message || 'Error!', 'error');
+  }
 
 })
 

@@ -14,9 +14,7 @@ router.get('/', authenticationService.ensureAuthorized, function(req, res, next)
     .limit(8)
     .exec(function(err, milestones) {
       if (err) {
-        res.json({
-          err: err
-        });
+        res.status(500).send({message: err});
       }
       else {
         delete query.options.sort;
@@ -36,9 +34,7 @@ router.get('/', authenticationService.ensureAuthorized, function(req, res, next)
 router.get('/:id', authenticationService.ensureAuthorized, function(req, res, next) {
   Milestone.findOne({_id: req.params.id}, function(err, milestoneFromDb) {
     if (err) {
-      res.json({
-        err: err
-      });
+      res.status(500).send({message: err});
     }
     else if (!milestoneFromDb) {
       res.status(404);
@@ -97,9 +93,7 @@ router.put('/:id', authenticationService.ensureAuthorized, function(req, res) {
 router.delete('/:id', authenticationService.ensureAuthorized, function(req, res) {
   Milestone.findOne({_id: req.params.id}).remove().exec(function(err) {
     if (err) {
-      res.json({
-        err: err
-      });
+      res.status(500).send({message: err});
     }
     else {
       res.json({});
@@ -109,9 +103,7 @@ router.delete('/:id', authenticationService.ensureAuthorized, function(req, res)
 
 function returnSaveResult(err, milestone, res) {
   if (err) {
-    res.json({
-      err: err
-    });
+    res.status(500).send({message: err});
   }
   else {
     res.json(mapSchemaMilestoneToModel(milestone));

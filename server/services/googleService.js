@@ -133,23 +133,23 @@ function uploadEncodedStringAsImage(base64Image, options, callback) {
 module.exports = {
   requestAccess: requestAccess,
   getTokenFromCode: getTokenFromCode,
-  uploadPicture: function(userId, b64ImageString, callback) {
+  uploadPicture: function(userId, b64ImageString, callback, errorCallback) {
 
     User.findOne({_id: userId}, function(err, user) {
       if (err) {
         //todo - use promise reject
-        callback(err);
+        errorCallback(err);
       } else {
 
         GoogleOauthToken.findOne({user_id: userId}, function(err, tokens) {
           if (err) {
-            console.log("error!! => " + err);
+            errorCallback(err);
           }
           oauth2Client.setCredentials(tokens);
 
           oauth2Client.getRequestMetadata(null, function(err, headers, response) {
             if (err) {
-              console.log("error getting token => " + err);
+              errorCallback(err);
             }
 
             // update access token data for user
@@ -169,12 +169,15 @@ module.exports = {
                     callback(result.entry['media:group'][0]['media:content'][0].$.url);
                   }
                   else {
-                    console.error('Error', err);
+                    errorCallback(err);
                   }
                 });
               }
               else {
-                console.error('Error', response ? response.statusCode: '', body);
+                var statusCode = response ? response.statusCode : '';
+                errorCallback({
+                  message: statusCode + ': ' + body
+                });
               }
             });
 

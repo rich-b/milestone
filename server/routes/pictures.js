@@ -12,6 +12,10 @@ router.post('/', authenticationService.ensureAuthorized, function(req, res, next
     res.json({
       imageUrl: url
     });
+  },
+  function error(err) {
+    console.log(err);
+    res.status(500).send({err: err});
   });
 });
 
