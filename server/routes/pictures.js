@@ -8,7 +8,9 @@ var googleService = require('../services/googleService');
 var url = require('url');
 
 router.post('/', authenticationService.ensureAuthorized, function(req, res, next) {
+  console.log('uploading picture to google...');
   googleService.uploadPicture(req.userId, req.body.encodedImage, function(url) {
+      console.log('success uploading to google :)');
     res.json({
       imageUrl: url
     });
