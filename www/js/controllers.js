@@ -128,6 +128,11 @@ angular.module('milestone.controllers', ['milestone.filters'])
     });
   });
 
+  this.fileToUploadClick = function() {
+    // hack that might work to prevent image capture crashes
+    $('fileToUpload').val('');
+  };
+
   this.fileSelected = function() {
     var f = document.getElementById('fileToUpload').files[0];
     var reader = new FileReader();
