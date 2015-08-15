@@ -194,7 +194,8 @@ angular.module('milestone.controllers', ['milestone.filters'])
   };
 
   function handleError(err) {
-    ngNotify.set(err.data.message || 'Error!', 'error');
+    var message = _.get(err, 'data.message') || err;
+    ngNotify.set(message, 'error');
   }
 
 })
