@@ -57,7 +57,7 @@ angular.module('milestone', ['ionic', 'ngResource', 'ngCordova', 'milestone.cont
 
 })
 
-.config(function($stateProvider, $urlRouterProvider, $httpProvider, $provide) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, $provide, $injector) {
   $stateProvider
 
   .state('app', {
@@ -197,6 +197,22 @@ angular.module('milestone', ['ionic', 'ngResource', 'ngCordova', 'milestone.cont
   });
 
   $httpProvider.interceptors.push('loginRedirectInterceptor');
+})
+
+.factory('$exceptionHandler', function ($injector, $log) {
+  return function (exception, cause) {
+    var errorObject = {
+      name: exception.name,
+      message: exception.message,
+      cause: cause,
+      stacktrace: exception.stack
+    };
+
+    var milestoneService = $injector.get('milestoneService');
+    milestoneService.logError(exception);
+
+    $log.error(exception);
+  };
 })
 
 .constant('milestoneTypes', [

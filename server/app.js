@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var users = require('./routes/users');
 var milestones = require('./routes/milestones');
 var pictures = require('./routes/pictures');
+var errorRoutes = require('./routes/error');
 
 var env = process.env.NODE_ENV || 'development'
 var config = require('./config')[env]
@@ -59,7 +60,7 @@ app.use(function(req, res, next) {
 app.use('/users', users);
 app.use('/milestones', milestones);
 app.use('/pictures', pictures);
-
+app.use('/error', errorRoutes);
 
 
 

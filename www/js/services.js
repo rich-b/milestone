@@ -44,6 +44,11 @@ angular.module('milestone.services', [])
     return Milestone.delete({}, {'id': milestone.id}).$promise;
   };
 
+  this.logError = function(exception) {
+    setAuthHeader();
+    $http.post($rootScope.serviceUriPrefix + '/error', JSON.stringify(exception));
+  };
+
   // set auth header before every action incase user token changed
   function setAuthHeader() {
     $http.defaults.headers.common['authorization']= window.localStorage['authToken'];
