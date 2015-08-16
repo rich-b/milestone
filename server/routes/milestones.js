@@ -11,7 +11,7 @@ router.get('/', authenticationService.ensureAuthorized, function(req, res, next)
 
   query
     .skip(req.query.offset || 0)
-    .limit(8)
+    .limit(15)
     .exec(function(err, milestones) {
       if (err) {
         res.status(500).send({message: err});

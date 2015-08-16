@@ -95,7 +95,7 @@ angular.module('milestone.controllers', ['milestone.filters'])
 
   if (_.isUndefined($stateParams.id) || $stateParams.id === '') {
     this.milestoneModel = {
-      date: new Date(), //new Date($filter("date")(Date.now(), 'yyyy-MM-dd')),
+      date: new Date(),
       images: []
     };
   } else {
@@ -108,11 +108,11 @@ angular.module('milestone.controllers', ['milestone.filters'])
 
   this.save = function() {
     if (this.isNew) {
-      milestoneService.addMilestone(self.milestoneModel).then(function success() {
+      milestoneService.addMilestone(this.milestoneModel).then(function success() {
         $location.path('/app/milestone-list');
       }, handleError);
     } else {
-      milestoneService.updateMilestone(self.milestoneModel).then(function success() {
+      milestoneService.updateMilestone(this.milestoneModel).then(function success() {
         $location.path('/app/milestone-list');
       }, handleError);
     }
