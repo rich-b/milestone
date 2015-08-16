@@ -92,19 +92,18 @@ angular.module('milestone.controllers', ['milestone.filters'])
   this.isNew = true;
   this.displayTab = 'details';
   this.milestoneTypes = milestoneTypes;
-  var self = this;
 
   if (_.isUndefined($stateParams.id) || $stateParams.id === '') {
     this.milestoneModel = {
-      date: new Date($filter("date")(Date.now(), 'yyyy-MM-dd')),
+      date: new Date(), //new Date($filter("date")(Date.now(), 'yyyy-MM-dd')),
       images: []
     };
   } else {
     milestoneService.getMilestone($stateParams.id).then(function(milestone) {
-      self.milestoneModel = milestone;
-    });
+      this.milestoneModel = milestone;
+    }.bind(this));
 
-    self.isNew = false;
+    this.isNew = false;
   }
 
   this.save = function() {
@@ -121,11 +120,11 @@ angular.module('milestone.controllers', ['milestone.filters'])
 
   $rootScope.$on('PICTURE_TAKEN', function(event, encodedImage) {
     pictureService.upload(encodedImage).then(function(response) {
-      self.milestoneModel.images.push({
+      this.milestoneModel.images.push({
         src: response.imageUrl
       });
       ngNotify.set('Image successfully added', 'success');
-    });
+    }.bind(this));
   });
 
   this.fileToUploadClick = function() {
@@ -143,11 +142,11 @@ angular.module('milestone.controllers', ['milestone.filters'])
 
       pictureService.upload(img).then(
         function success(response) {
-          self.milestoneModel.images.push({
+          this.milestoneModel.images.push({
             src: response.imageUrl
           });
           ngNotify.set('Image successfully added', 'success');
-        }, handleError
+        }.bind(this), handleError
       );
     };
 
@@ -167,25 +166,25 @@ angular.module('milestone.controllers', ['milestone.filters'])
   };
 
   this.addPictureUrl = function() {
-    if (self.newImageUrl && self.newImageUrl.length > 0) {
-      self.milestoneModel.images.push({
-        src: self.newImageUrl
+    if (this.newImageUrl && this.newImageUrl.length > 0) {
+      this.milestoneModel.images.push({
+        src: this.newImageUrl
       });
 
-      self.newImageUrl = '';
-      self.carouselIndex = self.milestoneModel.images.length - 1;
+      this.newImageUrl = '';
+      this.carouselIndex = this.milestoneModel.images.length - 1;
     }
   };
 
   this.removePicture = function() {
-    self.milestoneModel.images.splice(self.carouselIndex, 1);
+    this.milestoneModel.images.splice(this.carouselIndex, 1);
   };
 
   this.defaultImageChanged = function(imageIndex) {
-    var currentImage = self.milestoneModel.images[imageIndex];
+    var currentImage = this.milestoneModel.images[imageIndex];
     var newDefaultValue = currentImage.isDefault;
     if (newDefaultValue) {
-      _.each(self.milestoneModel.images, function(img) {
+      _.each(this.milestoneModel.images, function(img) {
         if (img !== currentImage) {
           img.isDefault = false;
         }
