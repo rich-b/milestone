@@ -209,7 +209,7 @@ angular.module('milestone', ['ionic', 'ngResource', 'ngCordova', 'milestone.cont
     };
 
     var milestoneService = $injector.get('milestoneService');
-    milestoneService.logError(exception);
+    milestoneService.logError(errorObject);
 
     $log.error(exception);
   };

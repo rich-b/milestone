@@ -148,7 +148,7 @@ angular.module('milestone.controllers', ['milestone.filters'])
           ngNotify.set('Image successfully added', 'success');
         }.bind(this), handleError
       );
-    };
+    }.bind(this);
 
     reader.onerror = function(e) {
       ngNotify.set('Error reading file: ' + reader.error, 'error');
